@@ -1,4 +1,12 @@
+/** Project:LAB 3 Database
+ * Purpose Details:Redis Class to perform CRUD
+ * Course: IST242
+ * Author:Jordan Borrero
+ * Date Developed:2/20/24
+ * Last Date Changed:2/21/24
+ * Rev:1
 
+ */
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 

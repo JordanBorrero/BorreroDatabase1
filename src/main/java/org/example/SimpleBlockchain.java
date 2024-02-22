@@ -1,4 +1,12 @@
+/** Project:LAB 3 Database
+ * Purpose Details:Blockchain Class
+ * Course: IST242
+ * Author:Jordan Borrero
+ * Date Developed:2/20/24
+ * Last Date Changed:2/21/24
+ * Rev:1
 
+ */
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;

@@ -1,12 +1,21 @@
+/** Project:LAB 3 Database
+ * Purpose Details:Mongo Class
+ * Course: IST242
+ * Author:Jordan Borrero
+ * Date Developed:2/20/24
+ * Last Date Changed:2/21/24
+ * Rev:1
 
+ */
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.FindIterable;
+
 import org.bson.Document;
 
-public class StudentMongoCRUDExample {
+public class MongoCRUD {
     public static void main(String[] args) {
         // Create a MongoClient using the factory method
         try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {

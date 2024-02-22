@@ -1,3 +1,13 @@
+/** Project:LAB 3 Database
+ * Purpose Details:MYSQL Class to perform CRUD
+ * Course: IST242
+ * Author:Jordan Borrero
+ * Date Developed:2/20/24
+ * Last Date Changed:2/21/24
+ * Rev:1
+
+ */
+package org.example;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,18 +17,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentCRUDExample {
+public class MySQLCRUD {
+    //Data of Class
     private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/School";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "IST888IST888";
-
-    public static void main(String[] args) {
+    private int Customerid;
+    private String Customername;
+    private int Customerage;
+    private String Customeraddress;
+    private String Customerupdatedaddress;
+    //Perform CRUD
+    public void run(String Customername, int Customerid, int Customerage, String Customeraddress, String Customerupdatedaddress) {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
             // Create
-            insertStudent(connection, 1, "John", "Doe", 20, "john@example.com");
+            insertStudent(connection, Customerid, Customername, Customerage, Customeraddress);
 
             // Read
             List<Student> students = getAllStudents(connection);
@@ -27,7 +43,7 @@ public class StudentCRUDExample {
             }
 
             // Update
-            updateStudent(connection, 1, "Updated First Name");
+            updateStudent(connection, Customerid, Customerupdatedaddress);
 
             // Read again
             students = getAllStudents(connection);
@@ -51,39 +67,37 @@ public class StudentCRUDExample {
         }
     }
 
-    private static void insertStudent(Connection connection, int id, String firstName, String lastName, int age, String email) throws SQLException {
-        String sql = "INSERT INTO students (id, firstName, lastName, age, email) VALUES (?, ?, ?, ?, ?)";
+    private static void insertStudent(Connection connection, int id, String name, int age, String address) throws SQLException {
+        String sql = "INSERT INTO students (id, name, age, address) VALUES (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, firstName);
-            preparedStatement.setString(3, lastName);
-            preparedStatement.setInt(4, age);
-            preparedStatement.setString(5, email);
+            preparedStatement.setString(2, name);
+            preparedStatement.setInt(3, age);
+            preparedStatement.setString(4, address);
             preparedStatement.executeUpdate();
         }
     }
 
     private static List<Student> getAllStudents(Connection connection) throws SQLException {
         List<Student> students = new ArrayList<>();
-        String sql = "SELECT id, firstName, lastName, age, email FROM students";
+        String sql = "SELECT id, name, age, address FROM students";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String firstName = resultSet.getString("firstName");
-                String lastName = resultSet.getString("lastName");
+                String name = resultSet.getString("name");
                 int age = resultSet.getInt("age");
-                String email = resultSet.getString("email");
-                students.add(new Student(id, firstName, lastName, age, email));
+                String address = resultSet.getString("address");
+                students.add(new Student(id, name, age, address));
             }
         }
         return students;
     }
 
-    private static void updateStudent(Connection connection, int id, String newFirstName) throws SQLException {
-        String sql = "UPDATE students SET firstName = ? WHERE id = ?";
+    private static void updateStudent(Connection connection, int id, String newaddress) throws SQLException {
+        String sql = "UPDATE students SET name = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, newFirstName);
+            preparedStatement.setString(1, newaddress);
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         }
@@ -100,27 +114,24 @@ public class StudentCRUDExample {
 
 class Student {
     private int id;
-    private String firstName;
-    private String lastName;
+    private String name;
     private int age;
-    private String email;
+    private String address;
 
-    public Student(int id, String firstName, String lastName, int age, String email) {
+    public Student(int id, String name, int age, String address) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.age = age;
-        this.email = email;
+        this.address = address;
     }
 
     @Override
     public String toString() {
         return "Student{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
                 ", age=" + age +
-                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }
